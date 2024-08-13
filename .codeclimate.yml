@@ -1,0 +1,60 @@
+version:
+checks:
+  argument-count:
+    enabled: true
+    config:
+      treshold: 5
+
+  complex-logic:
+    enabled: true
+    config:
+      treshold: 4
+  file-lines:
+    enabled: true
+    config:
+      treshold: 250
+
+  method-complexity:
+    enabled: true
+    config:
+      treshold: 15
+
+  method-count:
+    enabled: true
+    config:
+      treshold: 20
+
+  method-lines:
+    enabled: true
+    config:
+      treshold: 30
+
+  nested-control-flow:
+    enabled: true
+    config:
+      treshold: 4
+    
+  return-statements:
+    enabled: true
+    config:
+      treshold: 4
+  
+  similar-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overridea affect all languages.
+
+  identical-code:
+    enabled: true
+      threshold: #language-specific defaults. overridea affect all languages. 
+
+exclude_patterns:
+- "config/"
+- "db/"
+- "dist/"
+- "features/"
+- "*venv/"
+- "**/tests/"
+- "**/vendor/"
+- "**/*_test.go"
+- "**/*.d.ts"
