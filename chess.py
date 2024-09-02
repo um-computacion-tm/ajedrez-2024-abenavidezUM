@@ -83,3 +83,9 @@ class game_state:
             [black_rook_1, black_knight_1, black_bishop_1, black_king, black_queen, black_bishop_2, black_knight_2,
              black_rook_2]
         ]
+
+    def get_piece(self, row, col):
+        if 0 <= row < 8 and 0 <= col < 8:
+            return self.board[row][col]
+        else:
+            return None
