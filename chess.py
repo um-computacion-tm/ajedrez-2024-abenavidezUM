@@ -89,3 +89,7 @@ class game_state:
             return self.board[row][col]
         else:
             return None
+        
+    def is_valid_piece(self, row, col):
+        evaluated_piece = self.get_piece(row, col)
+        return evaluated_piece is not None and evaluated_piece != Player.EMPTY
