@@ -93,3 +93,96 @@ class game_state:
     def is_valid_piece(self, row, col):
         evaluated_piece = self.get_piece(row, col)
         return evaluated_piece is not None and evaluated_piece != Player.EMPTY
+    
+    def get_valid_moves(self, starting_square):
+        '''
+        remove pins from valid moves (unless the pinned piece move can get rid of a check and checks is empty
+        remove move from valid moves if the move falls within a check piece's valid move
+        if the moving piece is a king, the ending square cannot be in a check
+        '''
+
+        current_row = starting_square[0]
+        current_col = starting_square[1]
+
+        if self.is_valid_piece(current_row, current_col):
+            valid_moves = []
+            moving_piece = self.get_piece(current_row, current_col)
+            if self.get_piece(current_row, current_col).is_player(Player.PLAYER_1):
+                king_location = self._white_king_location
+            else:
+                king_location = self._black_king_location
+            group = self.check_for_check(king_location, moving_piece.get_player())
+            checking_pieces = group[0]
+            pinned_pieces = group[1]
+            pinned_checks = group[2]
+            initial_valid_piece_moves = moving_piece.get_valid_piece_moves(self)
+
+            # immediate check
+            if checking_pieces:
+                for move in initial_valid_piece_moves:
+                    can_move = True
+                    for piece in checking_pieces:
+                        if moving_piece.get_name() is "k":
+                            temp = self.board[current_row][current_col]
+                            self.board[current_row][current_col] = Player.EMPTY
+                            temp2 = self.board[move[0]][move[1]]
+                            self.board[move[0]][move[1]] = temp
+                            if not self.check_for_check(move, moving_piece.get_player())[0]:
+                                pass
+                            else:
+                                can_move = False
+                            self.board[current_row][current_col] = temp
+                            self.board[move[0]][move[1]] = temp2
+                        elif move == piece and len(checking_pieces) == 1 and moving_piece.get_name() is not "k" and \
+                                (current_row, current_col) not in pinned_pieces:
+                            pass
+                        elif move != piece and len(checking_pieces) == 1 and moving_piece.get_name() is not "k" and \
+                                (current_row, current_col) not in pinned_pieces:
+                            temp = self.board[move[0]][move[1]]
+                            self.board[move[0]][move[1]] = moving_piece
+                            self.board[current_row][current_col] = Player.EMPTY
+                            if self.check_for_check(king_location, moving_piece.get_player())[0]:
+                                can_move = False
+                            self.board[current_row][current_col] = moving_piece
+                            self.board[move[0]][move[1]] = temp
+                        else:
+                            can_move = False
+                    if can_move:
+                        valid_moves.append(move)
+                self._is_check = True
+
+            # pinned checks
+            elif pinned_pieces and moving_piece.get_name() is not "k":
+                if starting_square not in pinned_pieces:
+                    for move in initial_valid_piece_moves:
+                        valid_moves.append(move)
+                elif starting_square in pinned_pieces:
+                    for move in initial_valid_piece_moves:
+
+                        temp = self.board[move[0]][move[1]]
+                        self.board[move[0]][move[1]] = moving_piece
+                        self.board[current_row][current_col] = Player.EMPTY
+                        if not self.check_for_check(king_location, moving_piece.get_player())[0]:
+                            valid_moves.append(move)
+                        self.board[current_row][current_col] = moving_piece
+                        self.board[move[0]][move[1]] = temp
+            else:
+                if moving_piece.get_name() is "k":
+                    for move in initial_valid_piece_moves:
+                        temp = self.board[current_row][current_col]
+                        temp2 = self.board[move[0]][move[1]]
+                        self.board[current_row][current_col] = Player.EMPTY
+                        self.board[move[0]][move[1]] = temp
+                        if not self.check_for_check(move, moving_piece.get_player())[0]:
+                            valid_moves.append(move)
+                        self.board[current_row][current_col] = temp
+                        self.board[move[0]][move[1]] = temp2
+                else:
+                    for move in initial_valid_piece_moves:
+                        valid_moves.append(move)
+
+            return valid_moves
+        else:
+            return None
+
+     # 0 if white lost, 1 if black lost, 2 if stalemate, 3 if not game over
