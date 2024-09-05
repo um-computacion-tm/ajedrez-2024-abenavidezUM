@@ -95,6 +95,7 @@ class game_state:
         return evaluated_piece is not None and evaluated_piece != Player.EMPTY
     
     def get_valid_moves(self, starting_square):
+
         '''
         remove pins from valid moves (unless the pinned piece move can get rid of a check and checks is empty
         remove move from valid moves if the move falls within a check piece's valid move
@@ -186,3 +187,17 @@ class game_state:
             return None
 
      # 0 if white lost, 1 if black lost, 2 if stalemate, 3 if not game over
+
+    def checkmate_stalemate_checker(self):
+        all_white_moves = self.get_all_legal_moves(Player.PLAYER_1)
+        all_black_moves = self.get_all_legal_moves(Player.PLAYER_2)
+        if self._is_check and self.whose_turn() and not all_white_moves:
+            print("white lost")
+            return 0
+        elif self._is_check and not self.whose_turn() and not all_black_moves:
+            print("black lost")
+            return 1
+        elif not all_white_moves and not all_black_moves:
+            return 2
+        else:
+            return 3
