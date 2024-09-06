@@ -201,3 +201,14 @@ class game_state:
             return 2
         else:
             return 3
+        
+    def get_all_legal_moves(self, player):
+
+        _all_valid_moves = []
+        for row in range(0, 8):
+            for col in range(0, 8):
+                if self.is_valid_piece(row, col) and self.get_piece(row, col).is_player(player):
+                    valid_moves = self.get_valid_moves((row, col))
+                    for move in valid_moves:
+                        _all_valid_moves.append(((row, col), move))
+        return _all_valid_moves
