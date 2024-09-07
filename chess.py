@@ -212,3 +212,11 @@ class game_state:
                     for move in valid_moves:
                         _all_valid_moves.append(((row, col), move))
         return _all_valid_moves
+    
+    def king_can_castle_left(self, player):
+        if player is Player.PLAYER_1:
+            return self.white_king_can_castle[0] and self.white_king_can_castle[1] and \
+                   self.get_piece(0, 1) is Player.EMPTY and self.get_piece(0, 2) is Player.EMPTY and not self._is_check
+        else:
+            return self.black_king_can_castle[0] and self.black_king_can_castle[1] and \
+                   self.get_piece(7, 1) is Player.EMPTY and self.get_piece(7, 2) is Player.EMPTY and not self._is_check
