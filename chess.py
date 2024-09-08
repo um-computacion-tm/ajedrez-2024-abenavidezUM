@@ -220,3 +220,11 @@ class game_state:
         else:
             return self.black_king_can_castle[0] and self.black_king_can_castle[1] and \
                    self.get_piece(7, 1) is Player.EMPTY and self.get_piece(7, 2) is Player.EMPTY and not self._is_check
+        
+    def king_can_castle_right(self, player):
+        if player is Player.PLAYER_1:
+            return self.white_king_can_castle[0] and self.white_king_can_castle[2] and \
+                   self.get_piece(0, 6) is Player.EMPTY and self.get_piece(0, 5) is Player.EMPTY and not self._is_check
+        else:
+            return self.black_king_can_castle[0] and self.black_king_can_castle[2] and \
+                   self.get_piece(7, 6) is Player.EMPTY and self.get_piece(7, 5) is Player.EMPTY and not self._is_check
