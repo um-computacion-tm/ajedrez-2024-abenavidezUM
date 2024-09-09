@@ -228,3 +228,47 @@ class game_state:
         else:
             return self.black_king_can_castle[0] and self.black_king_can_castle[2] and \
                    self.get_piece(7, 6) is Player.EMPTY and self.get_piece(7, 5) is Player.EMPTY and not self._is_check
+        
+class chess_move():
+    def __init__(self, starting_square, ending_square, game_state, in_check):
+        self.starting_square_row = starting_square[0]
+        self.starting_square_col = starting_square[1]
+        self.moving_piece = game_state.get_piece(self.starting_square_row, self.starting_square_col)
+        self.in_check = in_check
+
+        self.ending_square_row = ending_square[0]
+        self.ending_square_col = ending_square[1]
+        if game_state.is_valid_piece(self.ending_square_row, self.ending_square_col):
+            self.removed_piece = game_state.get_piece(self.ending_square_row, self.ending_square_col)
+        else:
+            self.removed_piece = Player.EMPTY
+
+        self.castled = False
+        self.rook_starting_square = None
+        self.rook_ending_square = None
+        self.moving_rook = None
+
+        self.pawn_promoted = False
+        self.replacement_piece = None
+
+        self.en_passaned = False
+        self.en_passant_eaten_piece = None
+        self.en_passant_eaten_square = None
+
+    def castling_move(self, rook_starting_square, rook_ending_square, game_state):
+        self.castled = True
+        self.rook_starting_square = rook_starting_square
+        self.rook_ending_square = rook_ending_square
+        self.moving_rook = game_state.get_piece(rook_starting_square[0], rook_starting_square[1])
+
+    def pawn_promotion_move(self, new_piece):
+        self.pawn_promoted = True
+        self.replacement_piece = new_piece
+
+    def en_passant_move(self, eaten_piece, eaten_piece_square):
+        self.en_passaned = True
+        self.en_passant_eaten_piece = eaten_piece
+        self.en_passant_eaten_square = eaten_piece_square
+
+    def get_moving_piece(self):
+        return self.moving_piece
