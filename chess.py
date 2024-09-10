@@ -229,6 +229,25 @@ class game_state:
             return self.black_king_can_castle[0] and self.black_king_can_castle[2] and \
                    self.get_piece(7, 6) is Player.EMPTY and self.get_piece(7, 5) is Player.EMPTY and not self._is_check
         
+    def promote_pawn(self, starting_square, moved_piece, ending_square):
+        while True:
+            new_piece_name = input("Change pawn to (r, n, b, q):\n")
+            piece_classes = {"r": Rook, "n": Knight, "b": Bishop, "q": Queen}
+            if new_piece_name in piece_classes:
+                move = chess_move(starting_square, ending_square, self, self._is_check)
+
+                new_piece = piece_classes[new_piece_name](new_piece_name, ending_square[0],
+                                                          ending_square[1], moved_piece.get_player())
+                self.board[ending_square[0]][ending_square[1]] = new_piece
+                self.board[moved_piece.get_row_number()][moved_piece.get_col_number()] = Player.EMPTY
+                moved_piece.change_row_number(ending_square[0])
+                moved_piece.change_col_number(ending_square[1])
+                move.pawn_promotion_move(new_piece)
+                self.move_log.append(move)
+                break
+            else:
+                print("Please choose from these four: r, n, b, q.\n")
+        
 class chess_move():
     def __init__(self, starting_square, ending_square, game_state, in_check):
         self.starting_square_row = starting_square[0]
