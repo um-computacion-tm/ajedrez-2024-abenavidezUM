@@ -247,6 +247,17 @@ class game_state:
                 break
             else:
                 print("Please choose from these four: r, n, b, q.\n")
+
+    def promote_pawn_ai(self, starting_square, moved_piece, ending_square):
+        move = chess_move(starting_square, ending_square, self, self._is_check)
+        # The ai can only promote the pawn to queen
+        new_piece = Queen("q", ending_square[0], ending_square[1], moved_piece.get_player())
+        self.board[ending_square[0]][ending_square[1]] = new_piece
+        self.board[moved_piece.get_row_number()][moved_piece.get_col_number()] = Player.EMPTY
+        moved_piece.change_row_number(ending_square[0])
+        moved_piece.change_col_number(ending_square[1])
+        move.pawn_promotion_move(new_piece)
+        self.move_log.append(move)
         
 class chess_move():
     def __init__(self, starting_square, ending_square, game_state, in_check):
