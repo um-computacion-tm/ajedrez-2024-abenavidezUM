@@ -258,6 +258,9 @@ class game_state:
         moved_piece.change_col_number(ending_square[1])
         move.pawn_promotion_move(new_piece)
         self.move_log.append(move)
+
+    def can_en_passant(self, current_square_row, current_square_col):
+        return False
         
 class chess_move():
     def __init__(self, starting_square, ending_square, game_state, in_check):
