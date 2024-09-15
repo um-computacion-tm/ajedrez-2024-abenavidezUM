@@ -261,6 +261,29 @@ class game_state:
 
     def can_en_passant(self, current_square_row, current_square_col):
         return False
+    
+    def previous_piece_en_passant(self):
+        return self._en_passant_previous
+    
+    def move_piece(self, starting_square, ending_square, is_ai):
+        current_square_row = starting_square[0]  # The integer row value of the starting square
+        current_square_col = starting_square[1]  # The integer col value of the starting square
+        next_square_row = ending_square[0]  # The integer row value of the ending square
+        next_square_col = ending_square[1]  # The integer col value of the ending square
+
+        if self.is_valid_piece(current_square_row, current_square_col) and \
+                (((self.whose_turn() and self.get_piece(current_square_row, current_square_col).is_player(
+                    Player.PLAYER_1)) or
+                  (not self.whose_turn() and self.get_piece(current_square_row, current_square_col).is_player(
+                      Player.PLAYER_2)))):
+
+            # The chess piece at the starting square
+            moving_piece = self.get_piece(current_square_row, current_square_col)
+
+            valid_moves = self.get_valid_moves(starting_square)
+
+            temp = True
+
         
 class chess_move():
     def __init__(self, starting_square, ending_square, game_state, in_check):
