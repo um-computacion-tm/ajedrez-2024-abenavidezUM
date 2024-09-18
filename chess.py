@@ -511,6 +511,9 @@ class game_state:
         else:
             print("Back to the beginning!")
 
+    def whose_turn(self):
+        return self.white_turn
+
 class chess_move():
     def __init__(self, starting_square, ending_square, game_state, in_check):
         self.starting_square_row = starting_square[0]
