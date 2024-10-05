@@ -1,28 +1,41 @@
-from enums import Player
 from piece import Piece
 
 class Bishop(Piece):
-    def get_valid_piece_moves(self, game_state):
-        moves = []
-        current_row, current_col = self.get_row_number(), self.get_col_number()
+    """
+    Represents a bishop chess piece, inheriting from the Piece base class.
+    """
 
-        def check_new_position(row_step, col_step):
-            row, col = current_row + row_step, current_col + col_step
-            while 0 <= row < 8 and 0 <= col < 8:
-                piece = game_state.get_piece(row, col)
-                if piece is Player.EMPTY:
-                    moves.append((row, col))
-                elif game_state.is_valid_piece(row, col) and not piece.is_player(self.get_player()):
-                    moves.append((row, col))
-                    break
-                else:
-                    break
-                row += row_step
-                col += col_step
+    def __init__(self, color, position):
+        """
+        Initializes a Bishop instance with a color and position.
 
-        check_new_position(-1, -1)  
-        check_new_position(-1, 1)   
-        check_new_position(1, -1)   
-        check_new_position(1, 1)   
+        Parameters:
+            color (str): The color of the bishop, e.g., "white" or "black".
+            position (tuple): The current position of the bishop on the board.
+        """
+        super().__init__(color, position)
 
-        return moves
+    def __str__(self):
+        """
+        Returns the Unicode character representing the bishop, depending on its color.
+
+        Returns:
+            str: "♗" if the bishop is white, "♝" if the bishop is black.
+        """
+        return "♗" if self.__color__ == "white" else "♝"
+
+    def check_move(self, positions, new_position):
+        """
+        Checks if moving to new_position is a valid move for the bishop.
+
+        Parameters:
+            positions (list): The current state of the board.
+            new_position (tuple): The position to move to.
+
+        Returns:
+            bool: True if the move is valid, False otherwise.
+        """
+        destination_piece = positions[new_position[0]][new_position[1]]
+        if destination_piece is not None and destination_piece.__color__ == self.__color__:
+            return False
+        return self.diagonal_move(positions, new_position)
