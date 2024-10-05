@@ -77,3 +77,19 @@ class Board:
             piece (Piece): The chess piece to place on the board.
         """
         self.positions[row][col] = piece
+
+    def find_piece(self, piece):
+        """
+        Finds the current position of a given piece on the board.
+
+        Parameters:
+            piece (Piece): The chess piece to locate.
+
+        Returns:
+            tuple or None: A tuple (row, col) indicating the piece's position, or None if not found.
+        """
+        for row in range(8):
+            for col in range(8):
+                if self.positions[row][col] == piece:
+                    return (row, col)
+        return None
