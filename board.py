@@ -116,3 +116,32 @@ class Board:
         self.validate_move(piece, destination)
         self.execute_move(piece, destination)
         return True
+    
+    
+    def validate_move(self, piece, destination):
+        """
+        Validates whether a move is legal according to the game rules.
+
+        Parameters:
+            piece (Piece): The piece attempting to move.
+            destination (tuple): A tuple (row, col) representing the destination position.
+
+        Raises:
+            PieceError: If the piece is not on the board.
+            MovePieceInvalid: If the move is invalid for the piece type.
+            MoveError: If the destination is occupied by a friendly piece.
+            KingError: If attempting to capture the opponent's king.
+        """
+        current_position = self.find_piece(piece)
+        if current_position is None:
+            raise PieceError("Piece not found on the board.")
+
+        if not piece.check_move(self.positions, destination):
+            raise MovePieceInvalid("Invalid piece movement.")
+
+        dest_piece = self.get_piece(*destination)
+        if dest_piece is not None:
+            if dest_piece.color == piece.color:
+                raise MoveError("You cannot move to a square occupied by your own piece.")
+            if isinstance(dest_piece, King):
+                raise KingError("You cannot capture the opponent's king.")
