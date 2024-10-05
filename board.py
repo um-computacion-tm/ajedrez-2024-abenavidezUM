@@ -117,7 +117,7 @@ class Board:
         self.execute_move(piece, destination)
         return True
     
-    
+
     def validate_move(self, piece, destination):
         """
         Validates whether a move is legal according to the game rules.
@@ -145,3 +145,23 @@ class Board:
                 raise MoveError("You cannot move to a square occupied by your own piece.")
             if isinstance(dest_piece, King):
                 raise KingError("You cannot capture the opponent's king.")
+            
+
+    def execute_move(self, piece, destination):
+        """
+        Executes a validated move on the board.
+
+        Parameters:
+            piece (Piece): The piece to move.
+            destination (tuple): The destination position as a tuple (row, col).
+        """
+        current_row, current_col = self.find_piece(piece)
+        dest_row, dest_col = destination
+        captured_piece = self.get_piece(dest_row, dest_col)
+
+        self.set_piece_on_board(dest_row, dest_col, piece)
+        self.set_piece_on_board(current_row, current_col, None)
+        piece.position = (dest_row, dest_col)
+
+        if captured_piece is not None:
+            captured_piece.position = None  # Remove the captured piece from the board
