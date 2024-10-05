@@ -66,3 +66,14 @@ class Board:
             Piece or None: The piece at the specified position, or None if the position is empty.
         """
         return self.positions[row][col]
+    
+    def set_piece_on_board(self, row, col, piece):
+        """
+        Places a piece at a specific position on the board.
+
+        Parameters:
+            row (int): The row index (0-7) where the piece will be placed.
+            col (int): The column index (0-7) where the piece will be placed.
+            piece (Piece): The chess piece to place on the board.
+        """
+        self.positions[row][col] = piece
