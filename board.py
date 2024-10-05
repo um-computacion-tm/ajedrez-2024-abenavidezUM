@@ -52,3 +52,17 @@ class Board:
         self.positions[7][5] = Bishop("white", (7, 5))
         self.positions[7][6] = Knight("white", (7, 6))
         self.positions[7][7] = Rook("white", (7, 7))
+
+
+    def get_piece(self, row, col):
+        """
+        Retrieves the piece at a specific position on the board.
+
+        Parameters:
+            row (int): The row index (0-7) on the board.
+            col (int): The column index (0-7) on the board.
+
+        Returns:
+            Piece or None: The piece at the specified position, or None if the position is empty.
+        """
+        return self.positions[row][col]
