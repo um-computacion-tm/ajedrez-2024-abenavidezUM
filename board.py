@@ -1,18 +1,26 @@
+from piece import Piece
+from bishop import Bishop
+from king import King
+from knight import Knight
+from pawn import Pawn
+from queen import Queen
 from rook import Rook
-
+from moves import PieceError, MoveError, MovePieceInvalid, KingError
 
 class Board:
-    def __init__(self):
-        self.__positions__ = []
-        for _ in range(8):
-            col = []
-            for _ in range(8):
-                col.append(None)
-            self.__positions__.append(col)
-        self.__positions__[0][0] = Rook("BLACK") # Black
-        self.__positions__[0][7] = Rook("BLACK") # Black
-        self.__positions__[7][7] = Rook("WHITE") # White
-        self.__positions__[7][0] = Rook("WHITE") # White
+    """
+    Represents the chess board and manages the state of the game.
+    """
 
-    def get_piece(self, row, col):
-        return self.__positions__[row][col]
+    def __init__(self, for_test=False):
+        """
+        Initializes the chess board with pieces set up in their starting positions,
+        unless 'for_test' is True, in which case the board is initialized empty.
+
+        Parameters:
+            for_test (bool): If True, the board will be empty for testing purposes.
+        """
+        self.positions = [[None for _ in range(8)] for _ in range(8)]
+
+        if not for_test:
+            self.setup_pieces()
