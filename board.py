@@ -78,6 +78,7 @@ class Board:
         """
         self.positions[row][col] = piece
 
+
     def find_piece(self, piece):
         """
         Finds the current position of a given piece on the board.
@@ -93,3 +94,25 @@ class Board:
                 if self.positions[row][col] == piece:
                     return (row, col)
         return None
+
+
+    def move(self, piece, destination):
+        """
+        Moves a piece from its current position to a new position if the move is valid.
+
+        Parameters:
+            piece (Piece): The piece to move.
+            destination (tuple): A tuple (row, col) representing the destination position.
+
+        Returns:
+            bool: True if the move is successful.
+
+        Raises:
+            PieceError: If the piece is not found on the board.
+            MovePieceInvalid: If the move is invalid for the piece.
+            MoveError: If the destination is occupied by a friendly piece.
+            KingError: If attempting to capture the opponent's king.
+        """
+        self.validate_move(piece, destination)
+        self.execute_move(piece, destination)
+        return True
