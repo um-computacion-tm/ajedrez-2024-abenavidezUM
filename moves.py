@@ -14,3 +14,10 @@ class ChessInvalid(Exception):
             message (str): An explanation of the error.
         """
         super().__init__(message)
+
+
+class PieceError(ChessInvalid):
+    """
+    Exception raised when a piece is not found on the board.
+    """
+    pass
