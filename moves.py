@@ -28,3 +28,10 @@ class PositionInvalid(ChessInvalid):
     Exception raised for invalid positions on the chess board.
     """
     pass
+
+
+class LocationError(ChessInvalid):
+    """
+    Exception raised when attempting to move a piece of a different color.
+    """
+    pass
