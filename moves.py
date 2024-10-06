@@ -35,3 +35,10 @@ class LocationError(ChessInvalid):
     Exception raised when attempting to move a piece of a different color.
     """
     pass
+
+
+class MoveError(ChessInvalid):
+    """
+    Exception raised for invalid moves in the chess game.
+    """
+    pass
