@@ -42,3 +42,10 @@ class MoveError(ChessInvalid):
     Exception raised for invalid moves in the chess game.
     """
     pass
+
+
+class MovePieceInvalid(MoveError):
+    """
+    Exception raised for invalid piece movements.
+    """
+    pass
