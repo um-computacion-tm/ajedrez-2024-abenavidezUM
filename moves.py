@@ -49,3 +49,10 @@ class MovePieceInvalid(MoveError):
     Exception raised for invalid piece movements.
     """
     pass
+
+
+class KingError(ChessInvalid):
+    """
+    Exception raised when attempting to capture the opponent's king.
+    """
+    pass
