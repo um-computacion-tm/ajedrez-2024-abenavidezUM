@@ -165,3 +165,24 @@ class Board:
 
         if captured_piece is not None:
             captured_piece.position = None  # Remove the captured piece from the board
+
+
+    def print_board(self):
+        """
+        Displays the current state of the chess board.
+        """
+        print("  A B C D E F G H")
+        print("  ----------------")
+        
+        for row in range(7, -1, -1):
+            line = f'{row+1}|'
+            for col in range(8):
+                piece = self.get_piece(row, col)
+                if piece is None:
+                    line += '. '  # Empty space
+                else:
+                    line += f'{piece} '
+            print(line + f'|{row+1}')
+        
+        print("  ----------------")
+        print("  A B C D E F G H")
