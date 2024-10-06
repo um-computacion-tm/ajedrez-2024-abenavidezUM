@@ -186,3 +186,25 @@ class Board:
         
         print("  ----------------")
         print("  A B C D E F G H")
+
+
+    def pieces_on_board(self):
+        """
+        Counts the number of white and black pieces remaining on the board.
+
+        Returns:
+            tuple: A tuple (white_pieces, black_pieces) representing the count of pieces for each color.
+        """
+        white_pieces = 0
+        black_pieces = 0
+        for row in range(8):
+            for col in range(8):
+                piece = self.get_piece(row, col)
+                if piece is None:
+                    continue
+                else:
+                    if piece.color == "white":
+                        white_pieces += 1
+                    else:
+                        black_pieces += 1
+        return (white_pieces, black_pieces)
