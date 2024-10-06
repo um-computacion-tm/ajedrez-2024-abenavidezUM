@@ -229,5 +229,13 @@ class Board:
             raise PieceError("Piece not found on the board.")
         else:
             return piece.color
+        
+
+    def clean_board(self):
+        """
+        Clears the board by removing all pieces.
+        """
+        self.positions = [[None for _ in range(8)] for _ in range(8)]
+
     
 
