@@ -21,3 +21,10 @@ class PieceError(ChessInvalid):
     Exception raised when a piece is not found on the board.
     """
     pass
+
+
+class PositionInvalid(ChessInvalid):
+    """
+    Exception raised for invalid positions on the chess board.
+    """
+    pass
