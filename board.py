@@ -208,3 +208,26 @@ class Board:
                     else:
                         black_pieces += 1
         return (white_pieces, black_pieces)
+    
+
+    def color_pieces(self, x, y):
+        """
+        Gets the color of the piece at the specified position.
+
+        Parameters:
+            x (int): The row index (0-7) on the board.
+            y (int): The column index (0-7) on the board.
+
+        Returns:
+            str: The color of the piece ("white" or "black").
+
+        Raises:
+            PieceError: If there is no piece at the specified position.
+        """
+        piece = self.get_piece(x, y)
+        if piece is None:
+            raise PieceError("Piece not found on the board.")
+        else:
+            return piece.color
+    
+
