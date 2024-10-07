@@ -1,37 +1,44 @@
-from enums import Player
 from piece import Piece
 
-
 class King(Piece):
-    # Initialize the piece
-    def __init__(self, name, row_number, col_number, player):
-        super().__init__(name, row_number, col_number, player)
-        self.has_moved = False  
+    """
+    Represents a king chess piece, inheriting from the Piece base class.
+    """
 
-    # Get moves
-    def get_valid_piece_moves(self, game_state):
-        _peaceful_moves = []
-        _piece_takes = []
+    def __init__(self, color, position):
+        """
+        Initializes a King instance with a color and position.
 
-        row_change = [-1, +0, +1, -1, +1, -1, +0, +1]
-        col_change = [-1, -1, -1, +0, +0, +1, +1, +1]
+        Parameters:
+            color (str): The color of the king, e.g., "white" or "black".
+            position (tuple): The current position of the king on the board.
+        """
+        super().__init__(color, position)
 
-        for i in range(0, 8):
-            new_row = self.get_row_number() + row_change[i]
-            new_col = self.get_col_number() + col_change[i]
+    def __str__(self):
+        """
+        Returns the Unicode character representing the king, depending on its color.
 
-            if not 0 <= new_row < 8 or not 0 <= new_col < 8:
-                continue
-            
-            evaluating_piece = game_state.get_piece(new_row, new_col)
+        Returns:
+            str: "♔" if the king is white, "♚" if the king is black.
+        """
+        return "♔" if self.__color__ == "white" else "♚"
 
-            
-            if evaluating_piece == Player.EMPTY:
-                _peaceful_moves.append((new_row, new_col))
+    def check_move(self, positions, new_position):
+        """
+        Checks if moving to new_position is a valid move for the king.
 
-           
-            
-            if not isinstance(evaluating_piece, int) and not evaluating_piece.is_player(self.get_player()):
-                _piece_takes.append((new_row, new_col))
+        Parameters:
+            positions (list): The current state of the board.
+            new_position (tuple): The position to move to.
 
-        return _peaceful_moves + _piece_takes
+        Returns:
+            bool: True if the move is valid, False otherwise.
+        """
+        new_x, new_y, current_x, current_y = self.get_coordinates(new_position)
+
+        if abs(new_x - current_x) <= 1 and abs(new_y - current_y) <= 1:
+            destination_piece = positions[new_x][new_y]
+            if destination_piece is None or destination_piece.__color__ != self.__color__:
+                return True
+        return False
