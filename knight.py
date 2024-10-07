@@ -1,23 +1,51 @@
-from enums import Player
 from piece import Piece
 
 class Knight(Piece):
-    def get_valid_piece_moves(self, game_state):
-        _peaceful_moves = []
-        _piece_takes = []
+    """
+    Represents a knight chess piece, inheriting from the Piece base class.
+    """
 
-        moves = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
+    def __init__(self, color, position):
+        """
+        Initializes a Knight instance with a color and position.
 
-        for move in moves:
-            new_row = self.get_row_number() + move[0]
-            new_col = self.get_col_number() + move[1]
+        Parameters:
+            color (str): The color of the knight, e.g., "white" or "black".
+            position (tuple): The current position of the knight on the board.
+        """
+        super().__init__(color, position)
 
-            if 0 <= new_row < 8 and 0 <= new_col < 8:
-                evaluating_square = game_state.get_piece(new_row, new_col)
-                
-                if evaluating_square == Player.EMPTY:
-                    _peaceful_moves.append((new_row, new_col))
-                elif not evaluating_square.is_player(self.get_player()):
-                    _piece_takes.append((new_row, new_col))
+    def __str__(self):
+        """
+        Returns the Unicode character representing the knight, depending on its color.
 
-        return _peaceful_moves + _piece_takes
+        Returns:
+            str: "♘" if the knight is white, "♞" if the knight is black.
+        """
+        return "♘" if self.__color__ == "white" else "♞"
+
+    def check_move(self, positions, new_position):
+        """
+        Checks if moving to new_position is a valid move for the knight.
+
+        Parameters:
+            positions (list): The current state of the board.
+            new_position (tuple): The position to move to.
+
+        Returns:
+            bool: True if the move is valid, False otherwise.
+        """
+        new_x, new_y, current_x, current_y = self.get_coordinates(new_position)
+
+        possible_moves = [
+            (2, 1), (2, -1), (-2, 1), (-2, -1),
+            (1, 2), (1, -2), (-1, 2), (-1, -2)
+        ]
+
+        for dx, dy in possible_moves:
+            if (new_x, new_y) == (current_x + dx, current_y + dy):
+                if self.is_in_bounds(new_x, new_y):
+                    destination_piece = positions[new_x][new_y]
+                    if destination_piece is None or destination_piece.__color__ != self.__color__:
+                        return True
+        return False
