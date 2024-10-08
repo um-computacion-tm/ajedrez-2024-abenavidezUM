@@ -1,57 +1,46 @@
-
-from enums import Player
 from piece import Piece
 
-
 class Rook(Piece):
-    # Initialize the piece
-    def __init__(self, name, row_number, col_number, player):
-        super().__init__(name,row_number, col_number, player)
-        self.has_moved = False  
+    """
+    Represents a rook chess piece, inheriting from the Piece base class.
+    """
 
-    # Get moves
-    def get_valid_piece_moves(self, game_state):
-        _peaceful_moves = []
-        _piece_takes = []
-        def check_new_position(new_row, new_col):
-            # when the square to the left is empty
-            if game_state.get_piece(new_row, new_col) == Player.EMPTY:
-                _peaceful_moves.append((new_row, new_col))
-            # when the square contains an opposing piece
-            elif game_state.is_valid_piece(new_row, new_col) and \
-                    not game_state.get_piece(new_row, new_col).is_player(self.get_player()):
-                _piece_takes.append((new_row, new_col))
-                self._breaking_point = True
-            else:
-                self._breaking_point = True
+    def __init__(self, color, position):
+        """
+        Initializes a Rook instance with a color and position.
 
-        _up = 1
-        _down = 1
-        _left = 1
-        _right = 1
+        Parameters:
+            color (str): The color of the rook, e.g., "white" or "black".
+            position (tuple): The current position of the rook on the board.
+        """
+        super().__init__(color, position)
 
-        # Left of the Rook
-        self._breaking_point = False
-        while self.get_col_number() - _left >= 0 and not self._breaking_point:
-            check_new_position(self.get_row_number(), self.get_col_number() - _left)
-            _left += 1
+    def __str__(self):
+        """
+        Returns the Unicode character representing the rook, depending on its color.
 
-        # Right of the Rook
-        self._breaking_point = False
-        while self.get_col_number() + _right < 8 and not self._breaking_point:
-            check_new_position(self.get_row_number(), self.get_col_number() + _right)
-            _right += 1
+        Returns:
+            str: "♖" if the rook is white, "♜" if the rook is black.
+        """
+        return "♖" if self.__color__ == "white" else "♜"
 
-        # Below the Rook
-        self._breaking_point = False
-        while self.get_row_number() + _down < 8 and not self._breaking_point:
-            check_new_position(self.get_row_number() + _down, self.get_col_number())
-            _down += 1
+    def check_move(self, positions, new_position):
+        """
+        Checks if moving to new_position is a valid move for the rook.
 
-        # Above the Rook
-        self._breaking_point = False
-        while self.get_row_number() - _up >= 0 and not self._breaking_point:
-            check_new_position(self.get_row_number() - _up, self.get_col_number())
-            _up += 1
-        
-        return _peaceful_moves + _piece_takes
+        Parameters:
+            positions (list): The current state of the board.
+            new_position (tuple): The position to move to.
+
+        Returns:
+            bool: True if the move is valid, False otherwise.
+        """
+        if self.horizontal_move(positions, new_position) or self.vertical_move(positions, new_position):
+            # Check if destination is within the board boundaries
+            if not self.is_in_bounds(*new_position):
+                return False
+            # Check if the destination is occupied by a friendly piece
+            destination_piece = positions[new_position[0]][new_position[1]]
+            if destination_piece is None or destination_piece.__color__ != self.__color__:
+                return True
+        return False
