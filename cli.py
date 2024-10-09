@@ -20,29 +20,33 @@ class CLI:
         Displays the main menu and handles user selection to start or exit the game.
         """
         while True:
-            print('Select an Option')
-            print('1) Start Game')
-            print('2) Exit\n')
+            try:
+                print('Select an Option')
+                print('1) Start Game')
+                print('2) Exit\n')
 
-            selection = input("Type your selection here: ") 
-            print("\n")
-            option = self.validate_option("start_game", selection) 
-            if option == "Invalid option": 
-                print("\n" + option + "\n")
-                continue
+                selection = input("Type your selection here: ") 
+                print("\n")
+                option = self.validate_option("start_game", selection) 
+                if option == "Invalid option": 
+                    print("\n" + option + "\n")
+                    continue
 
-            elif option == "Game Over": 
-                print("\n" + option + "\n")
+                elif option == "Game Over": 
+                    print("\n" + option + "\n")
+                    break
+
+                elif option == "Game Started": 
+                    self.chess_game = Chess()
+                    self.clear_terminal()
+                    self.game_over = False  # Reset game state
+                    self.result = None
+                    self.start_game()
+                    if self.game_over:
+                        break  # Exit the menu loop after the game ends
+            except (EOFError, StopIteration):
+                # Exit the loop if input is exhausted during testing
                 break
-
-            elif option == "Game Started": 
-                self.chess_game = Chess()
-                self.clear_terminal()
-                self.game_over = False  # Reset game state
-                self.result = None
-                self.start_game()
-                if self.game_over:
-                    break  # Exit the menu loop after the game ends
 
     def validate_option(self, menu_type, option):
         """
@@ -159,7 +163,10 @@ class CLI:
         """
         while True:
             self.display_turn_menu()
-            selection = input("\nType your selection here: ") 
+            try:
+                selection = input("\nType your selection here: ") 
+            except (EOFError, StopIteration):
+                return False  # Exit the loop if input is exhausted during testing
             option = self.validate_option("continue_game", selection) 
 
             if option == "Invalid option":
@@ -239,7 +246,10 @@ class CLI:
         print(f"\n{self.chess_game.next_turn()}, Do you want to accept the draw? [Y/N]")
         
         while True:
-            option = input("Type your answer here: ") 
+            try:
+                option = input("Type your answer here: ") 
+            except (EOFError, StopIteration):
+                return False  # Assume draw is declined if input is exhausted
 
             if option.lower() == "y":
                 return True
