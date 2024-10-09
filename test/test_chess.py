@@ -27,8 +27,9 @@ class TestChess(unittest.TestCase):
             self.game.move('E7', 'E5')
 
     def test_translate_input(self):
-        self.assertEqual(self.game.translate_input('A1'), (0, 0))
-        self.assertEqual(self.game.translate_input('H8'), (7, 7))
+        # Updated expected values based on the corrected translate_input method
+        self.assertEqual(self.game.translate_input('A1'), (7, 0))
+        self.assertEqual(self.game.translate_input('H8'), (0, 7))
 
     def test_invalid_input(self):
         with self.assertRaises(PositionInvalid):

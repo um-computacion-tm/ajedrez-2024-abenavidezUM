@@ -2,7 +2,7 @@ import unittest
 from board import Board
 from king import King
 from queen import Queen
-from pawn import Pawn
+from rook import Rook
 from moves import PieceError, MovePieceInvalid, MoveError, KingError
 
 class TestBoard(unittest.TestCase):
@@ -50,17 +50,26 @@ class TestBoard(unittest.TestCase):
             self.board.move(pawn, (7, 0))
 
     def test_capture_king(self):
-        # Attempt to capture opponent's king
-        queen = self.board.get_piece(7, 3)
-        self.board.set_piece_on_board(1, 4, None)  # Remove pawn blocking the king
-        self.board.set_piece_on_board(2, 4, None)
-        self.board.set_piece_on_board(3, 4, None)
-        self.board.set_piece_on_board(4, 4, None)
-        self.board.set_piece_on_board(5, 4, None)
-        self.board.set_piece_on_board(6, 4, None)
-        self.board.move(queen, (0, 4))
+        # Adjusted test to attempt a valid move that tries to capture the opponent's king
+        queen = self.board.get_piece(7, 3)  # White queen at (7, 3)
+        # Clear the path for the queen to move vertically to (0, 3)
+        for i in range(1, 7):
+            self.board.set_piece_on_board(7 - i, 3, None)
+        # Move queen to (1, 3) first
+        self.board.move(queen, (1, 3))
+        # Attempt to capture the black king at (0, 4) from (1, 3)
+        # Clear the path diagonally
+        self.board.set_piece_on_board(0, 4, self.black_king)  # Ensure black king is at (0, 4)
         with self.assertRaises(KingError):
-            self.board.validate_move(queen, (0, 4))
+            self.board.move(queen, (0, 4))
+
+    def test_blocked_by_friendly_piece_at_destination(self):
+        # Place a friendly piece at the destination
+        friendly_piece = Queen("white", (4, 6))
+        self.board.set_piece_on_board(4, 6, friendly_piece)
+        queen = self.board.get_piece(7, 3)
+        with self.assertRaises(MoveError):
+            self.board.move(queen, (4, 6))
 
 if __name__ == '__main__':
     unittest.main()
