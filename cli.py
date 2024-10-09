@@ -9,9 +9,11 @@ class CLI:
     
     def __init__(self):
         """
-        Initializes the CLI with a new Chess game instance.
+        Initializes the CLI with a new Chess game instance and game state tracking.
         """
         self.chess_game = Chess()
+        self.game_over = False
+        self.result = None
 
     def menu(self):
         """
@@ -36,8 +38,11 @@ class CLI:
             elif option == "Game Started": 
                 self.chess_game = Chess()
                 self.clear_terminal()
-                if self.start_game():
-                    break
+                self.game_over = False  # Reset game state
+                self.result = None
+                self.start_game()
+                if self.game_over:
+                    break  # Exit the menu loop after the game ends
 
     def validate_option(self, menu_type, option):
         """
@@ -78,10 +83,10 @@ class CLI:
         Starts the game loop, handling player turns until the game ends.
 
         Returns:
-            bool: False when the game ends.
+            bool: True when the game ends.
         """
-        while True:
-            if not self.turn_menu(): 
+        while not self.game_over:
+            if not self.turn_menu():
                 break
             self.display_board_and_turn()
 
@@ -91,7 +96,10 @@ class CLI:
             if result in ["Black wins", "White wins", "Draw"]: 
                 print(f'\n{result}')
                 print("\nGame Over\n")
-                return False
+                self.game_over = True
+                self.result = result
+                return True
+        return self.game_over
 
     def display_board_and_turn(self):
         """
@@ -157,11 +165,11 @@ class CLI:
             if option == "Invalid option":
                 self.handle_invalid_option(selection) 
             elif option == "Resign":
-                if self.handle_resignation(): 
-                    break
+                self.handle_resignation()
+                return False
             elif option == "Draw": 
-                if self.handle_draw(): 
-                    break
+                if self.handle_draw():
+                    return False
             elif option == "Move piece": 
                 return True
         return False
@@ -192,15 +200,13 @@ class CLI:
     def handle_resignation(self):
         """
         Handles the player's resignation and declares the winner.
-
-        Returns:
-            bool: True to indicate the game should end.
         """
         player = self.chess_game.turn
         print(f"\n{player} resigns the game")
         winner = self.chess_game.next_turn()
         print(f"\n{winner} WINS")
-        return True
+        self.game_over = True
+        self.result = f"{winner} WINS"
 
     def handle_draw(self):
         """
@@ -211,6 +217,8 @@ class CLI:
         """
         if self.draw(self.chess_game.turn): 
             print("\nGame Drawn")
+            self.game_over = True
+            self.result = "Game Drawn"
             return True
         else:
             rejecting_player = self.chess_game.next_turn()
