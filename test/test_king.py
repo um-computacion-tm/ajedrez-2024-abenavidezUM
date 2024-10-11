@@ -1,3 +1,5 @@
+import unittest
+
 from test.test_piece import TestPiece
 from king import King
 

@@ -1,9 +1,10 @@
 import unittest
-from moves import MovePieceInvalid
 
 class TestPiece(unittest.TestCase):
+    __test__ = False  # Evita que unittest ejecute esta clase
+
     def setUp(self):
-        self.piece = None  # Será establecido por las clases hijas
+        self.piece = None  # Será definido en las clases hijas
         self.positions = [[None for _ in range(8)] for _ in range(8)]
     
     def test_valid_moves(self):
