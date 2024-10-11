@@ -1,9 +1,9 @@
 import unittest
 
-from test.test_piece import TestPiece
+from test.test_piece import BaseTestPiece
 from queen import Queen
 
-class TestQueen(TestPiece):
+class TestQueen(BaseTestPiece):
     def setUp(self):
         super().setUp()
         self.piece = Queen("white", (4, 4))

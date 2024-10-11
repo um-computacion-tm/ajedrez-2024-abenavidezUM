@@ -1,6 +1,6 @@
 import unittest
 
-class TestPiece(unittest.TestCase):
+class BaseTestPiece(unittest.TestCase):
     __test__ = False  # Evita que unittest ejecute esta clase
 
     def setUp(self):
