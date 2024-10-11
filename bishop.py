@@ -22,7 +22,7 @@ class Bishop(Piece):
         Returns:
             str: "♗" if the bishop is white, "♝" if the bishop is black.
         """
-        return "♗" if self.__color__ == "white" else "♝"
+        return "♗" if self.color== "white" else "♝"
 
     def check_move(self, positions, new_position):
         """
@@ -36,6 +36,6 @@ class Bishop(Piece):
             bool: True if the move is valid, False otherwise.
         """
         destination_piece = positions[new_position[0]][new_position[1]]
-        if destination_piece is not None and destination_piece.__color__ == self.__color__:
+        if destination_piece is not None and destination_piece.__color__ == self.color:
             return False
         return self.diagonal_move(positions, new_position)

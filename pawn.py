@@ -22,7 +22,7 @@ class Pawn(Piece):
         Returns:
             str: "♙" if the pawn is white, "♟" if the pawn is black.
         """
-        return "♙" if self.__color__ == "white" else "♟"
+        return "♙" if self.color== "white" else "♟"
 
     def check_move(self, positions, new_position):
         """
@@ -35,9 +35,9 @@ class Pawn(Piece):
         Returns:
             bool: True if the move is valid, False otherwise.
         """
-        if self.__color__ == "white":
+        if self.color == "white":
             return self.is_valid_pawn_move(positions, new_position, -1, 6)
-        elif self.__color__ == "black":
+        elif self.color == "black":
             return self.is_valid_pawn_move(positions, new_position, 1, 1)
         return False
 
@@ -73,7 +73,7 @@ class Pawn(Piece):
         elif (new_x == current_x + direction and
               abs(new_y - current_y) == 1 and
               positions[new_x][new_y] is not None and
-              positions[new_x][new_y].__color__ != self.__color__):
+              positions[new_x][new_y].__color__ != self.color):
             return True
         return False
 

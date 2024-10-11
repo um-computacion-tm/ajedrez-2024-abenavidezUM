@@ -1,22 +1,12 @@
 from abc import ABC, abstractmethod
 
 class Piece(ABC):
-    """
-    Base class for all chess pieces.
-    """
-
     def __init__(self, color, position):
-        """
-        Initializes a Piece with a color and position.
-        """
         self._color = color
         self._position = position
 
     @property
     def color(self):
-        """
-        Gets the color of the piece.
-        """
         return self._color
 
     @property

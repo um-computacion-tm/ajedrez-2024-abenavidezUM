@@ -1,4 +1,4 @@
-from test.base_test_piece import TestPiece
+from base_test_piece import TestPiece
 from queen import Queen
 
 class TestQueen(TestPiece):

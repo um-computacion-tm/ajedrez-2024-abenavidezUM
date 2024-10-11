@@ -1,4 +1,4 @@
-from test.base_test_piece import TestPiece
+from base_test_piece import TestPiece
 from knight import Knight
 
 class TestKnight(TestPiece):

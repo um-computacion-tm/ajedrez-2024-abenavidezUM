@@ -22,7 +22,7 @@ class Knight(Piece):
         Returns:
             str: "♘" if the knight is white, "♞" if the knight is black.
         """
-        return "♘" if self.__color__ == "white" else "♞"
+        return "♘" if self.color == "white" else "♞"
 
     def check_move(self, positions, new_position):
         """

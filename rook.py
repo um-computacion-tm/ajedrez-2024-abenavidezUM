@@ -22,7 +22,7 @@ class Rook(Piece):
         Returns:
             str: "♖" if the rook is white, "♜" if the rook is black.
         """
-        return "♖" if self.__color__ == "white" else "♜"
+        return "♖" if self.color == "white" else "♜"
 
     def check_move(self, positions, new_position):
         """
