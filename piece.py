@@ -8,50 +8,34 @@ class Piece(ABC):
     def __init__(self, color, position):
         """
         Initializes a Piece with a color and position.
-
-        Parameters:
-            color (str): The color of the piece, e.g., "white" or "black".
-            position (tuple): The current position of the piece on the board as (row, column).
         """
-        self.__color__ = color
-        self.__position__ = position
+        self._color = color
+        self._position = position
 
     @property
     def color(self):
         """
         Gets the color of the piece.
-
-        Returns:
-            str: The color of the piece.
         """
-        return self.__color__
+        return self._color
 
     @property
     def position(self):
         """
         Gets the current position of the piece.
-
-        Returns:
-            tuple: The current position as (row, column).
         """
-        return self.__position__
+        return self._position
 
     @position.setter
     def position(self, new_position):
         """
         Sets the position of the piece.
-
-        Parameters:
-            new_position (tuple): The new position as (row, column).
         """
-        self.__position__ = new_position
+        self._position = new_position
 
     def __str__(self):
         """
         Returns a string representation of the piece.
-
-        Returns:
-            str: A placeholder character for an unspecified piece.
         """
         return "?"
 
@@ -59,41 +43,20 @@ class Piece(ABC):
     def check_move(self, positions, new_position):
         """
         Abstract method to check if a move is valid for the piece.
-        Must be implemented by subclasses.
-
-        Parameters:
-            positions (list): The current state of the board.
-            new_position (tuple): The position to move to.
-
-        Returns:
-            bool: True if the move is valid, False otherwise.
         """
         pass
 
     def get_coordinates(self, new_position):
         """
         Returns the coordinates for the current and new positions.
-
-        Parameters:
-            new_position (tuple): The new position as (row, column).
-
-        Returns:
-            tuple: A tuple containing new_x, new_y, current_x, current_y.
         """
         new_x, new_y = new_position
-        current_x, current_y = self.__position__
+        current_x, current_y = self._position
         return new_x, new_y, current_x, current_y
 
     def diagonal_move(self, positions, new_position):
         """
         Checks if the move is a valid diagonal move, ensuring the path is unobstructed.
-
-        Parameters:
-            positions (list): The current state of the board.
-            new_position (tuple): The position to move to.
-
-        Returns:
-            bool: True if the move is a valid diagonal move, False otherwise.
         """
         new_x, new_y, current_x, current_y = self.get_coordinates(new_position)
         x_diff, y_diff = new_x - current_x, new_y - current_y
@@ -114,13 +77,6 @@ class Piece(ABC):
     def horizontal_move(self, positions, new_position):
         """
         Checks if the move is a valid horizontal move, ensuring the path is unobstructed.
-
-        Parameters:
-            positions (list): The current state of the board.
-            new_position (tuple): The position to move to.
-
-        Returns:
-            bool: True if the move is a valid horizontal move, False otherwise.
         """
         new_x, new_y, current_x, current_y = self.get_coordinates(new_position)
 
@@ -138,13 +94,6 @@ class Piece(ABC):
     def vertical_move(self, positions, new_position):
         """
         Checks if the move is a valid vertical move, ensuring the path is unobstructed.
-
-        Parameters:
-            positions (list): The current state of the board.
-            new_position (tuple): The position to move to.
-
-        Returns:
-            bool: True if the move is a valid vertical move, False otherwise.
         """
         new_x, new_y, current_x, current_y = self.get_coordinates(new_position)
 
@@ -162,12 +111,5 @@ class Piece(ABC):
     def is_in_bounds(self, x, y):
         """
         Checks if the given coordinates are within the board boundaries.
-
-        Parameters:
-            x (int): The row index.
-            y (int): The column index.
-
-        Returns:
-            bool: True if within boundaries, False otherwise.
         """
         return 0 <= x < 8 and 0 <= y < 8

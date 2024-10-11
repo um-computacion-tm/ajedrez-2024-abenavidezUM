@@ -20,57 +20,42 @@ class CLI:
         Displays the main menu and handles user selection to start or exit the game.
         """
         while True:
-            try:
-                print('Select an Option')
-                print('1) Start Game')
-                print('2) Exit\n')
+            self.display_main_menu()
+            selection = input("Type your selection here: ")
+            option = self.validate_option("start_game", selection)
 
-                selection = input("Type your selection here: ") 
-                print("\n")
-                option = self.validate_option("start_game", selection) 
-                if option == "Invalid option": 
-                    print("\n" + option + "\n")
-                    continue
-
-                elif option == "Game Over": 
-                    print("\n" + option + "\n")
+            if option == "Invalid option":
+                print("\n" + option + "\n")
+            elif option == "Game Over":
+                print("\n" + option + "\n")
+                break
+            elif option == "Game Started":
+                self.start_new_game()
+                if self.game_over:
                     break
 
-                elif option == "Game Started": 
-                    self.chess_game = Chess()
-                    self.clear_terminal()
-                    self.game_over = False  # Reset game state
-                    self.result = None
-                    self.start_game()
-                    if self.game_over:
-                        break  # Exit the menu loop after the game ends
-            except (EOFError, StopIteration):
-                # Exit the loop if input is exhausted during testing
-                break
+    def display_main_menu(self):
+        print('Select an Option')
+        print('1) Start Game')
+        print('2) Exit\n')
+
+    def start_new_game(self):
+        self.chess_game = Chess()
+        self.clear_terminal()
+        self.game_over = False
+        self.result = None
+        self.start_game()
 
     def validate_option(self, menu_type, option):
-        """
-        Validates the user's menu selection.
-
-        Parameters:
-            menu_type (str): The type of menu to validate options for ('start_game' or 'continue_game').
-            option (str): The user's input selection.
-
-        Returns:
-            str: A string indicating the result of validation, or the action to take.
-        """
         result = ""
         if menu_type == "start_game": 
-        
             if option not in ["1", "2"]:
                 result = "Invalid option"
             elif option == "2":
                 result = "Game Over"
             elif option == "1":
                 result = "Game Started"
-            
         elif menu_type == "continue_game":
-       
             if option not in ["1", "2", "3"]:
                 result = "Invalid option"
             elif option == "3":
@@ -79,15 +64,11 @@ class CLI:
                 result = "Draw"
             elif option == "1":
                 result = "Move piece"
-
         return result
 
     def start_game(self):
         """
         Starts the game loop, handling player turns until the game ends.
-
-        Returns:
-            bool: True when the game ends.
         """
         while not self.game_over:
             if not self.turn_menu():
@@ -116,9 +97,6 @@ class CLI:
     def get_move_input(self):
         """
         Prompts the player to input their move.
-
-        Returns:
-            tuple: A tuple containing the from and to positions as strings.
         """
         print('\nEnter your move')
         from_input = input('From: ')
@@ -129,14 +107,6 @@ class CLI:
     def attempt_move(self, from_input, to_input, test_mode=False):
         """
         Attempts to move a piece on the board from one position to another.
-
-        Parameters:
-            from_input (str): The starting position in algebraic notation (e.g., 'A2').
-            to_input (str): The destination position in algebraic notation.
-            test_mode (bool): If True, exceptions are raised; otherwise, they are caught.
-
-        Returns:
-            str or None: The result of the move, or None if an exception occurs.
         """
         try:
             self.clear_terminal()
@@ -157,9 +127,6 @@ class CLI:
     def turn_menu(self):
         """
         Displays the menu for the player's turn and handles their selection.
-
-        Returns:
-            bool: True if the player chooses to move a piece, False if the game ends.
         """
         while True:
             self.display_turn_menu()
@@ -197,9 +164,6 @@ class CLI:
     def handle_invalid_option(self, selection):
         """
         Handles invalid menu options selected by the user.
-
-        Parameters:
-            selection (str): The invalid option entered by the user.
         """
         self.clear_terminal()
         print("\n" + f'{selection} is an invalid option, try again' + "\n")
@@ -218,9 +182,6 @@ class CLI:
     def handle_draw(self):
         """
         Handles a draw offer from the player.
-
-        Returns:
-            bool: True if the draw is accepted and the game ends, False otherwise.
         """
         if self.draw(self.chess_game.turn): 
             print("\nGame Drawn")
@@ -235,12 +196,6 @@ class CLI:
     def draw(self, player):
         """
         Offers a draw to the opponent and processes their response.
-
-        Parameters:
-            player (str): The player offering the draw.
-
-        Returns:
-            bool: True if the draw is accepted, False otherwise.
         """
         print(f"\n{player} wants to draw the game")
         print(f"\n{self.chess_game.next_turn()}, Do you want to accept the draw? [Y/N]")
