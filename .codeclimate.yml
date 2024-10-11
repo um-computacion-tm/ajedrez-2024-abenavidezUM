@@ -3,57 +3,50 @@ checks:
   argument-count:
     enabled: true
     config:
-      treshold: 5
-
+      threshold: 5
   complex-logic:
     enabled: true
     config:
-      treshold: 4
+      threshold: 4
   file-lines:
     enabled: true
     config:
-      treshold: 250
-
+      threshold: 250
   method-complexity:
     enabled: true
     config:
-      treshold: 15
-
+      threshold: 15
   method-count:
     enabled: true
     config:
-      treshold: 20
-
+      threshold: 20
   method-lines:
     enabled: true
     config:
-      treshold: 30
-
+      threshold: 30
   nested-control-flow:
     enabled: true
     config:
-      treshold: 4
-    
+      threshold: 4
   return-statements:
     enabled: true
     config:
-      treshold: 4
-  
+      threshold: 4
   similar-code:
     enabled: true
     config:
-      threshold: #language-specific defaults. overridea affect all languages.
-
+      threshold: #language-specific defaults. overrides affect all languages.
   identical-code:
     enabled: true
-      threshold: #language-specific defaults. overridea affect all languages. 
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
 
 exclude_patterns:
 - "config/"
 - "db/"
 - "dist/"
 - "features/"
-- "*venv/"
+- "venv/"
 - "**/tests/"
 - "**/vendor/"
 - "**/*_test.go"
