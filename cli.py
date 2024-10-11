@@ -105,48 +105,54 @@ class CLI:
         return from_input, to_input
 
     def attempt_move(self, from_input, to_input, test_mode=False):
-        """
-        Attempts to move a piece on the board from one position to another.
-        """
+        result = None
         try:
             self.clear_terminal()
             print('\n')
             result = self.chess_game.move(from_input, to_input)
-            return result
         except (ValueError, KingError, PieceError, MovePieceInvalid, MoveError, PositionInvalid, LocationError, ChessInvalid) as e:
             if test_mode:
                 raise
             print(e)
-            return None
         except Exception as e:
             if test_mode:
                 raise
             print("An unexpected error occurred.")
-            return None
+        finally:
+            return result
+
 
     def turn_menu(self):
         """
         Displays the menu for the player's turn and handles their selection.
         """
+        continue_game = False
         while True:
             self.display_turn_menu()
             try:
                 selection = input("\nType your selection here: ") 
             except (EOFError, StopIteration):
-                return False  # Exit the loop if input is exhausted during testing
+                continue_game = False  # Exit the loop if input is exhausted during testing
+                break
             option = self.validate_option("continue_game", selection) 
 
             if option == "Invalid option":
                 self.handle_invalid_option(selection) 
             elif option == "Resign":
                 self.handle_resignation()
-                return False
+                continue_game = False
+                break
             elif option == "Draw": 
                 if self.handle_draw():
-                    return False
+                    continue_game = False
+                    break
+                else:
+                    continue  # Ask for input again
             elif option == "Move piece": 
-                return True
-        return False
+                continue_game = True
+                break
+        return continue_game
+
 
     def display_turn_menu(self):
         """
