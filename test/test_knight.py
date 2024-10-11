@@ -1,7 +1,7 @@
-from base_test_piece import TestPiece
+from base_test_piece import BaseTestPiece
 from knight import Knight
 
-class TestKnight(TestPiece):
+class TestKnight(BaseTestPiece):
     def create_piece(self):
         return Knight("white", (4, 4))
     

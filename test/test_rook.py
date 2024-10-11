@@ -1,7 +1,7 @@
-from base_test_piece import TestPiece
+from base_test_piece import BaseTestPiece
 from rook import Rook
 
-class TestRook(TestPiece):
+class TestRook(BaseTestPiece):
     def create_piece(self):
         return Rook("white", (4, 4))
     

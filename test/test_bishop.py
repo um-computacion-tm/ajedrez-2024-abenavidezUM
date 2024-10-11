@@ -1,7 +1,7 @@
-from base_test_piece import TestPiece
+from base_test_piece import BaseTestPiece
 from bishop import Bishop
 
-class TestBishop(TestPiece):
+class TestBishop(BaseTestPiece):
     def create_piece(self):
         return Bishop("white", (4, 4))
     

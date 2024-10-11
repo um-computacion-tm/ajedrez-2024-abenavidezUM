@@ -1,7 +1,7 @@
-from base_test_piece import TestPiece
+from base_test_piece import BaseTestPiece
 from queen import Queen
 
-class TestQueen(TestPiece):
+class TestQueen(BaseTestPiece):
     def create_piece(self):
         return Queen("white", (4, 4))
     

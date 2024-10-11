@@ -1,7 +1,7 @@
-from base_test_piece import TestPiece
+from base_test_piece import BaseTestPiece
 from king import King
 
-class TestKing(TestPiece):
+class TestKing(BaseTestPiece):
     def create_piece(self):
         return King("white", (4, 4))
     
