@@ -1,7 +1,7 @@
 import unittest
 
 
-from base_test_piece import BaseTestPiece
+from test.base_test_piece import BaseTestPiece
 from rook import Rook
 
 class TestRook(BaseTestPiece, unittest.TestCase):

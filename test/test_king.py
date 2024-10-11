@@ -1,7 +1,7 @@
 import unittest
 
 
-from base_test_piece import BaseTestPiece
+from test.base_test_piece import BaseTestPiece
 from king import King
 
 class TestKing(BaseTestPiece, unittest.TestCase):

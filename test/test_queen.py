@@ -1,6 +1,6 @@
 import unittest
 
-from base_test_piece import BaseTestPiece
+from test.base_test_piece import BaseTestPiece
 from queen import Queen
 
 class TestQueen(BaseTestPiece, unittest.TestCase):

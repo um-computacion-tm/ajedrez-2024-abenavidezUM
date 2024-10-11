@@ -1,7 +1,7 @@
 import unittest
 
 
-from base_test_piece import BaseTestPiece
+from test.base_test_piece import BaseTestPiece
 from knight import Knight
 
 class TestKnight(BaseTestPiece, unittest.TestCase):
