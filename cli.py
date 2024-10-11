@@ -105,24 +105,22 @@ class CLI:
         return from_input, to_input
 
     def attempt_move(self, from_input, to_input, test_mode=False):
-        """
-        Attempts to move a piece on the board from one position to another.
-        """
+        result = None
         try:
             self.clear_terminal()
             print('\n')
             result = self.chess_game.move(from_input, to_input)
-            return result
         except (ValueError, KingError, PieceError, MovePieceInvalid, MoveError, PositionInvalid, LocationError, ChessInvalid) as e:
             if test_mode:
                 raise
             print(e)
-            return None
         except Exception as e:
             if test_mode:
                 raise
             print("An unexpected error occurred.")
-            return None
+        finally:
+            return result
+
 
     def turn_menu(self):
         """
