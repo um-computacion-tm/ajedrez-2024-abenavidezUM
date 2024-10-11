@@ -1,43 +1,34 @@
 import unittest
-from piece import Piece
-from abc import ABC, abstractmethod
+from moves import MovePieceInvalid
 
 class TestPiece(unittest.TestCase):
     def setUp(self):
-        # Create a concrete subclass of Piece for testing
-        class TestConcretePiece(Piece):
-            def check_move(self, positions, new_position):
-                return True
-
-        self.piece = TestConcretePiece("white", (0, 0))
-
-    def test_initialization(self):
-        self.assertEqual(self.piece.color, "white")
-        self.assertEqual(self.piece.position, (0, 0))
-
-    def test_position_property(self):
-        self.piece.position = (1, 1)
-        self.assertEqual(self.piece.position, (1, 1))
-
-    def test_str_method(self):
-        self.assertEqual(str(self.piece), "?")
-
-    def test_get_coordinates(self):
-        new_position = (2, 2)
-        new_x, new_y, current_x, current_y = self.piece.get_coordinates(new_position)
-        self.assertEqual((new_x, new_y), (2, 2))
-        self.assertEqual((current_x, current_y), (0, 0))
-
-    def test_is_in_bounds(self):
-        self.assertTrue(self.piece.is_in_bounds(0, 0))
-        self.assertTrue(self.piece.is_in_bounds(7, 7))
-        self.assertFalse(self.piece.is_in_bounds(-1, 0))
-        self.assertFalse(self.piece.is_in_bounds(0, 8))
-
-    def test_abstract_check_move(self):
-        # Ensure that calling check_move raises an error in the base class
-        with self.assertRaises(TypeError):
-            Piece("white", (0, 0))
-
-if __name__ == '__main__':
-    unittest.main()
+        self.piece = None  # Será establecido por las clases hijas
+        self.positions = [[None for _ in range(8)] for _ in range(8)]
+    
+    def test_valid_moves(self):
+        for move in self.valid_moves:
+            with self.subTest(move=move):
+                self.assertTrue(self.piece.check_move(self.positions, move))
+    
+    def test_invalid_moves(self):
+        for move in self.invalid_moves:
+            with self.subTest(move=move):
+                self.assertFalse(self.piece.check_move(self.positions, move))
+    
+    def test_capture_opponent_piece(self):
+        opponent_piece = self.create_opponent_piece(self.opponent_piece_type, self.opponent_piece_position)
+        self.positions[self.opponent_piece_position[0]][self.opponent_piece_position[1]] = opponent_piece
+        self.assertTrue(self.piece.check_move(self.positions, self.opponent_piece_position))
+    
+    def test_blocked_by_friendly_piece(self):
+        friendly_piece = self.create_friendly_piece(self.friendly_piece_type, self.friendly_piece_position)
+        self.positions[self.friendly_piece_position[0]][self.friendly_piece_position[1]] = friendly_piece
+        self.assertFalse(self.piece.check_move(self.positions, self.friendly_piece_position))
+    
+    # Métodos auxiliares para crear piezas
+    def create_opponent_piece(self, piece_class, position):
+        return piece_class("black", position)
+    
+    def create_friendly_piece(self, piece_class, position):
+        return piece_class("white", position)
