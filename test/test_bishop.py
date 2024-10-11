@@ -1,11 +1,13 @@
-from base_test_piece import BaseTestPiece
-from bishop import Bishop
 import unittest
 
-class TestKing(BaseTestPiece, unittest.TestCase):
+
+from base_test_piece import BaseTestPiece
+from bishop import Bishop
+
+class TestBishop(BaseTestPiece, unittest.TestCase):
     def create_piece(self):
         return Bishop("white", (4, 4))
-    
+
     def setUp(self):
         super().setUp()
         self.valid_moves = [
@@ -17,4 +19,4 @@ class TestKing(BaseTestPiece, unittest.TestCase):
         self.opponent_piece_type = Bishop
         self.opponent_piece_position = (7, 7)
         self.friendly_piece_type = Bishop
-        self.friendly_piece_position = (7, 7)
+        self.friendly_piece_position = (1, 7)

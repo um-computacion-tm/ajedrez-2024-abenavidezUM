@@ -1,41 +1,24 @@
 from piece import Piece
 
 class Bishop(Piece):
-    """
-    Represents a bishop chess piece, inheriting from the Piece base class.
-    """
-
-    def __init__(self, color, position):
-        """
-        Initializes a Bishop instance with a color and position.
-
-        Parameters:
-            color (str): The color of the bishop, e.g., "white" or "black".
-            position (tuple): The current position of the bishop on the board.
-        """
-        super().__init__(color, position)
-
     def __str__(self):
-        """
-        Returns the Unicode character representing the bishop, depending on its color.
-
-        Returns:
-            str: "♗" if the bishop is white, "♝" if the bishop is black.
-        """
-        return "♗" if self.color== "white" else "♝"
+        return "♗" if self.color == "white" else "♝"
 
     def check_move(self, positions, new_position):
-        """
-        Checks if moving to new_position is a valid move for the bishop.
+        new_x, new_y, current_x, current_y = self.get_coordinates(new_position)
 
-        Parameters:
-            positions (list): The current state of the board.
-            new_position (tuple): The position to move to.
+        if abs(new_x - current_x) == abs(new_y - current_y):
+            x_direction = 1 if new_x > current_x else -1
+            y_direction = 1 if new_y > current_y else -1
+            x, y = current_x + x_direction, current_y + y_direction
 
-        Returns:
-            bool: True if the move is valid, False otherwise.
-        """
-        destination_piece = positions[new_position[0]][new_position[1]]
-        if destination_piece is not None and destination_piece.__color__ == self.color:
-            return False
-        return self.diagonal_move(positions, new_position)
+            while (x, y) != (new_x, new_y):
+                if positions[x][y] is not None:
+                    return False
+                x += x_direction
+                y += y_direction
+
+            destination_piece = positions[new_x][new_y]
+            if destination_piece is None or destination_piece.color != self.color:
+                return True
+        return False

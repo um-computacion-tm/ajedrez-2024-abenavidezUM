@@ -1,11 +1,13 @@
+import unittest
+
+
 from base_test_piece import BaseTestPiece
 from king import King
-import unittest
 
 class TestKing(BaseTestPiece, unittest.TestCase):
     def create_piece(self):
         return King("white", (4, 4))
-    
+
     def setUp(self):
         super().setUp()
         self.valid_moves = [
@@ -17,6 +19,6 @@ class TestKing(BaseTestPiece, unittest.TestCase):
             (2, 4), (4, 2), (6, 4), (4, 6)
         ]
         self.opponent_piece_type = King
-        self.opponent_piece_position = (3, 4)
+        self.opponent_piece_position = (5, 5)
         self.friendly_piece_type = King
-        self.friendly_piece_position = (3, 4)
+        self.friendly_piece_position = (3, 3)
