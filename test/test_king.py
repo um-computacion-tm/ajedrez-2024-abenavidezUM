@@ -1,10 +1,7 @@
-import unittest
-
-from test.test_piece import BaseTestPiece
+from test.test_piece import TestPiece
 from king import King
 
-class TestKing(BaseTestPiece):
-
+class TestKing(TestPiece):
     def setUp(self):
         super().setUp()
         self.piece = King("white", (4, 4))
