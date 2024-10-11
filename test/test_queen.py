@@ -1,7 +1,8 @@
 from base_test_piece import BaseTestPiece
 from queen import Queen
+import unittest
 
-class TestQueen(BaseTestPiece):
+class TestKing(BaseTestPiece, unittest.TestCase):
     def create_piece(self):
         return Queen("white", (4, 4))
     

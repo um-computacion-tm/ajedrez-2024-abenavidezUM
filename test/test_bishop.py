@@ -1,7 +1,8 @@
 from base_test_piece import BaseTestPiece
 from bishop import Bishop
+import unittest
 
-class TestBishop(BaseTestPiece):
+class TestKing(BaseTestPiece, unittest.TestCase):
     def create_piece(self):
         return Bishop("white", (4, 4))
     

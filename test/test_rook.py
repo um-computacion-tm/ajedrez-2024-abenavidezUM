@@ -1,7 +1,8 @@
 from base_test_piece import BaseTestPiece
 from rook import Rook
+import unittest
 
-class TestRook(BaseTestPiece):
+class TestKing(BaseTestPiece, unittest.TestCase):
     def create_piece(self):
         return Rook("white", (4, 4))
     

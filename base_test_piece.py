@@ -1,7 +1,6 @@
-import unittest
 from abc import ABC, abstractmethod
 
-class BaseTestPiece(unittest.TestCase, ABC):
+class BaseTestPiece(ABC):
     def setUp(self):
         self.positions = [[None for _ in range(8)] for _ in range(8)]
         self.piece = self.create_piece()
@@ -10,7 +9,7 @@ class BaseTestPiece(unittest.TestCase, ABC):
 
     @abstractmethod
     def create_piece(self):
-        """Must be implemented by subclasses to create the specific piece."""
+        """Debe ser implementado por las clases hijas para crear la pieza específica."""
         pass
 
     def test_valid_moves(self):
