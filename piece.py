@@ -9,9 +9,17 @@ class Piece(ABC):
     def color(self):
         return self._color
 
+    @color.setter
+    def color(self, value):
+        self._color = value
+
     @property
     def position(self):
         return self._position
+
+    @position.setter
+    def position(self, value):
+        self._position = value
 
     @abstractmethod
     def check_move(self, positions, new_position):
