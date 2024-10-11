@@ -29,3 +29,11 @@ class Piece(ABC):
         current_x, current_y = self.position
         new_x, new_y = new_position
         return new_x, new_y, current_x, current_y
+
+    def is_destination_valid(self, positions, new_position):
+        new_x, new_y = new_position
+        if not (0 <= new_x < 8 and 0 <= new_y < 8):
+            return False  # La posición está fuera del tablero
+        destination_piece = positions[new_x][new_y]
+        # El destino es válido si está vacío o tiene una pieza oponente
+        return destination_piece is None or destination_piece.color != self.color
