@@ -2,6 +2,7 @@ import unittest
 from abc import ABC, abstractmethod
 
 class TestPiece(unittest.TestCase, ABC):
+    __test__ = False
     def setUp(self):
         self.positions = [[None for _ in range(8)] for _ in range(8)]
         self.piece = self.create_piece()
