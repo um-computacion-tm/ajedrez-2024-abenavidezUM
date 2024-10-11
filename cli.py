@@ -126,25 +126,33 @@ class CLI:
         """
         Displays the menu for the player's turn and handles their selection.
         """
+        continue_game = False
         while True:
             self.display_turn_menu()
             try:
                 selection = input("\nType your selection here: ") 
             except (EOFError, StopIteration):
-                return False  # Exit the loop if input is exhausted during testing
+                continue_game = False  # Exit the loop if input is exhausted during testing
+                break
             option = self.validate_option("continue_game", selection) 
 
             if option == "Invalid option":
                 self.handle_invalid_option(selection) 
             elif option == "Resign":
                 self.handle_resignation()
-                return False
+                continue_game = False
+                break
             elif option == "Draw": 
                 if self.handle_draw():
-                    return False
+                    continue_game = False
+                    break
+                else:
+                    continue  # Ask for input again
             elif option == "Move piece": 
-                return True
-        return False
+                continue_game = True
+                break
+        return continue_game
+
 
     def display_turn_menu(self):
         """
