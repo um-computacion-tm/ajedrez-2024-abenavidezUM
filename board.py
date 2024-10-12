@@ -78,16 +78,19 @@ class Board:
             captured_piece.position = None  # Remove the captured piece from the board
 
     def print_board(self):
-        print("  A B C D E F G H")
-        print("  ----------------")
+        print("  A  B  C  D  E  F  G  H")
+        print("  ------------------------")
         for row in range(7, -1, -1):
-            line = f'{row+1}|'
+            line = f'{row+1} |'
             for col in range(8):
                 piece = self.get_piece(row, col)
-                line += f'{piece if piece else ". "} '
-            print(line + f'|{row+1}')
-        print("  ----------------")
-        print("  A B C D E F G H")
+                # Asegura que cada casilla ocupe 2 espacios
+                line += f' {piece if piece else "."} '
+            line += f'| {row+1}'
+            print(line)
+        print("  ------------------------")
+        print("  A  B  C  D  E  F  G  H")
+
 
     def pieces_on_board(self):
         white_pieces = 0
