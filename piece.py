@@ -38,7 +38,6 @@ class Piece(ABC):
         # El destino es válido si está vacío o tiene una pieza oponente
         return destination_piece is None or destination_piece.color != self.color
 
-# Agregamos la clase LinearPiece aquí
 class LinearPiece(Piece):
     def check_move(self, positions, new_position):
         if not self.is_valid_direction(new_position):

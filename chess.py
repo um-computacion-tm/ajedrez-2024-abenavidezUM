@@ -92,7 +92,7 @@ class Chess:
             row = int(num)
             if row < 1 or row > 8:
                 raise PositionInvalid(f"Second character from [{input_str}], must be a number from 1 to 8.")
-            row_index = 8 - row  # Map rank to row index (1-8 to 7-0)
+            row_index = row - 1  # Map rank to row index (1-8 to 0-7)
             return (row_index, col)
         except ValueError:
             raise ValueError(f"Second character from [{input_str}], must be a number.")

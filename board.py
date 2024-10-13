@@ -18,10 +18,12 @@ class Board:
             self.setup_pieces()
 
     def setup_pieces(self):
-        self.setup_major_pieces('black', 0)
-        self.setup_pawns('black', 1)
-        self.setup_pawns('white', 6)
-        self.setup_major_pieces('white', 7)
+        # Asigna piezas blancas a filas 0 y 1
+        self.setup_major_pieces('white', 0)
+        self.setup_pawns('white', 1)
+        # Asigna piezas negras a filas 6 y 7
+        self.setup_pawns('black', 6)
+        self.setup_major_pieces('black', 7)
 
     def setup_major_pieces(self, color, row):
         pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
@@ -70,27 +72,29 @@ class Board:
         dest_row, dest_col = destination
         captured_piece = self.get_piece(dest_row, dest_col)
 
+        print(f'Moviendo {piece} de ({current_row}, {current_col}) a ({dest_row}, {dest_col})')  # Depuración
+
         self.set_piece_on_board(dest_row, dest_col, piece)
         self.set_piece_on_board(current_row, current_col, None)
         piece.position = (dest_row, dest_col)
 
         if captured_piece is not None:
             captured_piece.position = None  # Remove the captured piece from the board
+            print(f'Capturado: {captured_piece}')  # Depuración
 
     def print_board(self):
-        print("    A  B  C  D  E  F  G  H")
-        print("   ------------------------")
+        print("  A  B  C  D  E  F  G  H")
+        print("  ------------------------")
         for row in range(7, -1, -1):
             line = f'{row+1} |'
             for col in range(8):
                 piece = self.get_piece(row, col)
-                # Asegura que cada casilla ocupe 2 espacios
-                line += f' {piece if piece else "."} '
+                # Asegura que cada casilla ocupe 3 espacios (espacio antes, pieza o punto, espacio después)
+                line += f' {str(piece) if piece else "."} '
             line += f'| {row+1}'
             print(line)
-        print("   ------------------------")
-        print("    A  B  C  D  E  F  G  H")
-
+        print("  ------------------------")
+        print("  A  B  C  D  E  F  G  H")
 
     def pieces_on_board(self):
         white_pieces = 0

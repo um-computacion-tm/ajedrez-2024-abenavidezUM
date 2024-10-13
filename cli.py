@@ -113,11 +113,11 @@ class CLI:
         except (ValueError, KingError, PieceError, MovePieceInvalid, MoveError, PositionInvalid, LocationError, ChessInvalid) as e:
             if test_mode:
                 raise
-            print(e)
+            print(f"\nError: {e}\n")
         except Exception as e:
             if test_mode:
                 raise
-            print("An unexpected error occurred.")
+            print("\nAn unexpected error occurred.\n")
         finally:
             return result
 
