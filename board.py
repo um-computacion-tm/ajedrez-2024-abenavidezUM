@@ -18,10 +18,12 @@ class Board:
             self.setup_pieces()
 
     def setup_pieces(self):
-        self.setup_major_pieces('black', 0)
-        self.setup_pawns('black', 1)
-        self.setup_pawns('white', 6)
-        self.setup_major_pieces('white', 7)
+        # Asigna piezas blancas a filas 0 y 1
+        self.setup_major_pieces('white', 0)
+        self.setup_pawns('white', 1)
+        # Asigna piezas negras a filas 6 y 7
+        self.setup_pawns('black', 6)
+        self.setup_major_pieces('black', 7)
 
     def setup_major_pieces(self, color, row):
         pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
@@ -78,8 +80,8 @@ class Board:
             captured_piece.position = None  # Remove the captured piece from the board
 
     def print_board(self):
-        print("  A  B  C  D  E  F  G  H")
-        print("  ------------------------")
+        print("    A  B  C  D  E  F  G  H")
+        print("   ------------------------")
         for row in range(7, -1, -1):
             line = f'{row+1} |'
             for col in range(8):
@@ -88,8 +90,8 @@ class Board:
                 line += f' {piece if piece else "."} '
             line += f'| {row+1}'
             print(line)
-        print("  ------------------------")
-        print("  A  B  C  D  E  F  G  H")
+        print("   ------------------------")
+        print("    A  B  C  D  E  F  G  H")
 
 
     def pieces_on_board(self):
