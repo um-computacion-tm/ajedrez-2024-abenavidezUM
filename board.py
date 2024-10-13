@@ -18,12 +18,10 @@ class Board:
             self.setup_pieces()
 
     def setup_pieces(self):
-        # Asigna piezas blancas a filas 0 y 1
-        self.setup_major_pieces('white', 0)
-        self.setup_pawns('white', 1)
-        # Asigna piezas negras a filas 6 y 7
-        self.setup_pawns('black', 6)
-        self.setup_major_pieces('black', 7)
+        self.setup_major_pieces('black', 0)
+        self.setup_pawns('black', 1)
+        self.setup_pawns('white', 6)
+        self.setup_major_pieces('white', 7)
 
     def setup_major_pieces(self, color, row):
         pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]

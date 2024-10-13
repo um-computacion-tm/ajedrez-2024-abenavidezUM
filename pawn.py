@@ -3,8 +3,8 @@ from piece import Piece
 class Pawn(Piece):
     def __init__(self, color, position):
         super().__init__(color, position)
-        self._initial_row = 1 if self.color == "white" else 6
-        self._direction = 1 if self.color == "white" else -1
+        self._initial_row = 6 if self.color == "white" else 1
+        self._direction = -1 if self.color == "white" else 1
 
     def __str__(self):
         return "♙" if self.color == "white" else "♟"
