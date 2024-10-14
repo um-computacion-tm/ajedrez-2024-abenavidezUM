@@ -25,9 +25,9 @@ class CLI:
             option = self.validate_option("start_game", selection)
 
             if option == "Invalid option":
-                print("\n" + option + "\n")
+                print("\nInvalid option\n")
             elif option == "Game Over":
-                print("\n" + option + "\n")
+                print("\nGame Over\n")
                 break
             elif option == "Game Started":
                 self.start_new_game()
@@ -113,11 +113,11 @@ class CLI:
         except (ValueError, KingError, PieceError, MovePieceInvalid, MoveError, PositionInvalid, LocationError, ChessInvalid) as e:
             if test_mode:
                 raise
-            print(e)
+            print(f"\nError: {e}\n")
         except Exception as e:
             if test_mode:
                 raise
-            print("An unexpected error occurred.")
+            print("\nAn unexpected error occurred.\n")
         finally:
             return result
 

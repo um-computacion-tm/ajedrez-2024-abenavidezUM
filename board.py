@@ -8,18 +8,16 @@ from rook import Rook
 from moves import PieceError, MoveError, MovePieceInvalid, KingError
 
 class Board:
-    """
-    Represents the chess board and manages the state of the game.
-    """
-
     def __init__(self, for_test=False):
         self.positions = [[None for _ in range(8)] for _ in range(8)]
         if not for_test:
             self.setup_pieces()
 
     def setup_pieces(self):
+        # Asigna piezas negras a filas 0 y 1
         self.setup_major_pieces('black', 0)
         self.setup_pawns('black', 1)
+        # Asigna piezas blancas a filas 6 y 7
         self.setup_pawns('white', 6)
         self.setup_major_pieces('white', 7)
 
@@ -70,24 +68,30 @@ class Board:
         dest_row, dest_col = destination
         captured_piece = self.get_piece(dest_row, dest_col)
 
+        from_square = self.coords_to_notation(current_row, current_col)
+        to_square = self.coords_to_notation(dest_row, dest_col)
+        print(f'Moviendo {piece} de {from_square} a {to_square}')  # Mensaje en notación de ajedrez
+
         self.set_piece_on_board(dest_row, dest_col, piece)
         self.set_piece_on_board(current_row, current_col, None)
         piece.position = (dest_row, dest_col)
 
         if captured_piece is not None:
-            captured_piece.position = None  # Remove the captured piece from the board
+            captured_piece.position = None  # Eliminar la pieza capturada del tablero
+            print(f'Capturado: {captured_piece}')  # Depuración
 
     def print_board(self):
-        print("  A B C D E F G H")
-        print("  ----------------")
-        for row in range(7, -1, -1):
-            line = f'{row+1}|'
+        print("    A  B  C  D  E  F  G  H")
+        print("   ------------------------")
+        for row in range(8):
+            line = f'{8-row} |'
             for col in range(8):
                 piece = self.get_piece(row, col)
-                line += f'{piece if piece else ". "} '
-            print(line + f'|{row+1}')
-        print("  ----------------")
-        print("  A B C D E F G H")
+                line += f' {str(piece) if piece else "."} '
+            line += f'| {8-row}'
+            print(line)
+        print("   ------------------------")
+        print("    A  B  C  D  E  F  G  H")
 
     def pieces_on_board(self):
         white_pieces = 0
@@ -110,3 +114,11 @@ class Board:
         
     def clean_board(self):
         self.positions = [[None for _ in range(8)] for _ in range(8)]
+
+    def coords_to_notation(self, row, col):
+        """
+        Convierte coordenadas de la matriz a notación de ajedrez (e.g., (6,4) -> 'e2')
+        """
+        file = chr(ord('A') + col)
+        rank = 8 - row
+        return f"{file}{rank}"

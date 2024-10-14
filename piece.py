@@ -1,3 +1,4 @@
+# piece.py
 from abc import ABC, abstractmethod
 
 class Piece(ABC):
@@ -38,7 +39,6 @@ class Piece(ABC):
         # El destino es válido si está vacío o tiene una pieza oponente
         return destination_piece is None or destination_piece.color != self.color
 
-# Agregamos la clase LinearPiece aquí
 class LinearPiece(Piece):
     def check_move(self, positions, new_position):
         if not self.is_valid_direction(new_position):
@@ -47,7 +47,10 @@ class LinearPiece(Piece):
         if not self.is_path_clear(positions, new_position):
             return False
 
-        return self.is_destination_valid(positions, new_position)
+        if not self.is_destination_valid(positions, new_position):
+            return False
+
+        return True
 
     @abstractmethod
     def is_valid_direction(self, new_position):
