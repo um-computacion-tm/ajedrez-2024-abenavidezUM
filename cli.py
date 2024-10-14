@@ -25,9 +25,9 @@ class CLI:
             option = self.validate_option("start_game", selection)
 
             if option == "Invalid option":
-                print("\n" + option + "\n")
+                print("\nInvalid option\n")
             elif option == "Game Over":
-                print("\n" + option + "\n")
+                print("\nGame Over\n")
                 break
             elif option == "Game Started":
                 self.start_new_game()

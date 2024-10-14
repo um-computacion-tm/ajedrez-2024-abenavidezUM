@@ -72,7 +72,7 @@ class Board:
         dest_row, dest_col = destination
         captured_piece = self.get_piece(dest_row, dest_col)
 
-        print(f'Moviendo {piece} de ({current_row}, {current_col}) a ({dest_row}, {dest_col})')  # Depuración
+        print(f'Moviendo {piece} de ({current_row +1}, {current_col +1}) a ({dest_row +1}, {dest_col +1})')  # Depuración
 
         self.set_piece_on_board(dest_row, dest_col, piece)
         self.set_piece_on_board(current_row, current_col, None)
@@ -83,8 +83,8 @@ class Board:
             print(f'Capturado: {captured_piece}')  # Depuración
 
     def print_board(self):
-        print("    A  B  C  D  E  F  G  H")
-        print("   ------------------------")
+        print("  A  B  C  D  E  F  G  H")
+        print("  ------------------------")
         for row in range(7, -1, -1):
             line = f'{row+1} |'
             for col in range(8):
@@ -93,8 +93,8 @@ class Board:
                 line += f' {str(piece) if piece else "."} '
             line += f'| {row+1}'
             print(line)
-        print("   ------------------------")
-        print("    A  B  C  D  E  F  G  H")
+        print("  ------------------------")
+        print("  A  B  C  D  E  F  G  H")
 
     def pieces_on_board(self):
         white_pieces = 0
