@@ -9,12 +9,8 @@ class Knight(Piece):
         dx = abs(new_x - current_x)
         dy = abs(new_y - current_y)
 
-        # Verifica si el movimiento es en forma de "L"
-        if (dx, dy) not in [(2, 1), (1, 2)]:
-            return False
-
-        # Verifica si la casilla de destino es válida (vacía o contiene una pieza oponente)
-        if not self.is_destination_valid(positions, new_position):
-            return False
-
-        return True
+        if (dx, dy) in [(2, 1), (1, 2)]:
+            destination_piece = positions[new_x][new_y]
+            if destination_piece is None or destination_piece.color != self.color:
+                return True
+        return False

@@ -12,12 +12,10 @@ class King(Piece):
         return "♔" if self.color == "white" else "♚"
 
     def check_move(self, positions, new_position):
-        # Verifica si el movimiento es adyacente (máximo 1 casilla en cualquier dirección)
-        if not self.is_adjacent_move(new_position, max_distance=1):
-            return False
+        new_x, new_y, current_x, current_y = self.get_coordinates(new_position)
 
-        # Verifica si la casilla de destino es válida (vacía o contiene una pieza oponente)
-        if not self.is_destination_valid(positions, new_position):
-            return False
-
-        return True
+        if abs(new_x - current_x) <= 1 and abs(new_y - current_y) <= 1:
+            destination_piece = positions[new_x][new_y]
+            if destination_piece is None or destination_piece.color != self.color:
+                return True
+        return False
