@@ -62,19 +62,19 @@ class Chess:
         """
         piece = self.board.get_piece(x, y)
         if piece is None:
-            raise PieceError(f'In "{from_input}" position there is no piece')
+            raise PieceError(f'En la posición "{from_input}" no hay ninguna pieza.')
 
         if self.turn.lower() == piece.color:
             return piece
         else:
-            raise LocationError("Cannot move a piece of a different color")
+            raise LocationError("No puedes mover una pieza de un color diferente.")
             
     def translate_input(self, input_str):
         """
         Transforms an input string like 'A2' into board coordinates (row, col).
         """
         if len(input_str) != 2:
-            raise ValueError("Input must be 2 characters long, like 'A2'.")
+            raise ValueError("La entrada debe tener 2 caracteres, como 'A2'.")
 
         letter_to_col = {
             'A': 0, 'B': 1, 'C': 2, 'D': 3,
@@ -85,17 +85,17 @@ class Chess:
         num = input_str[1]
         
         if letter not in letter_to_col:
-            raise PositionInvalid(f"First character from [{input_str}], must be a letter from A to H.")
+            raise PositionInvalid(f"El primer carácter '{letter}' debe ser una letra de A a H.")
         col = letter_to_col[letter]
 
         try:
             row = int(num)
             if row < 1 or row > 8:
-                raise PositionInvalid(f"Second character from [{input_str}], must be a number from 1 to 8.")
+                raise PositionInvalid(f"El segundo carácter '{num}' debe ser un número de 1 a 8.")
             row_index = row - 1  # Map rank to row index (1-8 to 0-7)
             return (row_index, col)
         except ValueError:
-            raise ValueError(f"Second character from [{input_str}], must be a number.")
+            raise ValueError(f"El segundo carácter '{num}' debe ser un número.")
 
     def check_victory(self):
         """
