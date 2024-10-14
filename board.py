@@ -81,8 +81,8 @@ class Board:
             print(f'Capturado: {captured_piece}')  # Depuración
 
     def print_board(self):
-        print("  A  B  C  D  E  F  G  H")
-        print("  ------------------------")
+        print("    A  B  C  D  E  F  G  H")
+        print("   ------------------------")
         for row in range(8):
             line = f'{8-row} |'
             for col in range(8):
@@ -90,8 +90,8 @@ class Board:
                 line += f' {str(piece) if piece else "."} '
             line += f'| {8-row}'
             print(line)
-        print("  ------------------------")
-        print("  A  B  C  D  E  F  G  H")
+        print("   ------------------------")
+        print("    A  B  C  D  E  F  G  H")
 
     def pieces_on_board(self):
         white_pieces = 0
