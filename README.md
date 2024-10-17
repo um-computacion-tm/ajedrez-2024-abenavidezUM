@@ -19,7 +19,7 @@
 ```
 2) ### Crear la imagen de Docker con el juego: 
 ```bash
-    $ sudo docker build -t ajedrez-2024-abenavidezum . --no-cache
+    $ sudo docker build -t ajedrez-2024-abenavidezum . 
 ```
 3. ### Correr los test 
 ```bash
@@ -33,9 +33,12 @@ https://es.wikipedia.org/wiki/Leyes_del_ajedrez
 Excepciones: No estan implementadas las condiciones de jaque mate, jaque, ni movimientos especiales.
 ## Modo de Juego
 En la terminal vera reflejado  `1.Move piece`, `2.Draw` y `3.Resign`.
-    1- `Move piece`: 
+    
+1- `Move piece`: 
     Con esta primera opcion es con la que se mueven las fichas del tablero. Primero se coloca la posicion inicial y a continuacion la posicion de destino, por ejemplo:
-        WHITE TO MOVE (♙)
+        
+    WHITE TO MOVE (♙)
+        
         Moviendo ♙ de E2 a E4
 
             A  B  C  D  E  F  G  H
