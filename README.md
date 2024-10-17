@@ -51,9 +51,9 @@ En la terminal vera reflejado  `1.Move piece`, `2.Draw` y `3.Resign`.
            ------------------------
             A  B  C  D  E  F  G  H
 
-    2- `Draw`: Con esta opcion se puede proponer un empate al oponente.
+2- `Draw`: Con esta opcion se puede proponer un empate al oponente.
 
-    3- `Finish`: Permite terminar el juego.
+3- `Finish`: Permite terminar el juego.
 
 ## Finalizar el Juego
 El juego termina cuando alguno de los dos jugadores se queda sin piezas.
