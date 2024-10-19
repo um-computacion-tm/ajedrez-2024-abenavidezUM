@@ -21,9 +21,14 @@
 ```bash
     $ sudo docker build -t ajedrez-2024-abenavidezum . 
 ```
-3. ### Correr los test 
+   21) ### En caso de tener un error con la imagen de python, ejecute:
 ```bash
-    $ sudo docker run --rm ajedrez-2024-abenavidezum
+    $ docker pull python:3.10-alpine 
+``` 
+3) ### Correr los test 
+```bash
+    $ sudo docker run --rm -it ajedrez-2024-abenavidezum
+
 ```
 -------------
 ## Juego
